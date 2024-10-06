@@ -1,40 +1,88 @@
-import React from "react";
+import React, {useState} from 'react';
 import "./App.css";
-import adhar from "./Images/adhar.svg";
-import satyamev from "./Images/satyamev.svg";
+import { MdPrint } from "react-icons/md";
+import { CiEdit } from "react-icons/ci";
 import upper from "./Images/upper.png";
+// import dp from "./Images/dp.png";
+import admin from "./Images/admin.png";
 import lower from "./Images/lower.png";
+import QR from "./Images/QR.png";
 import english from "./Images/english.png";
 import contact from "./Images/contact.png";
-import QR from "./Images/QR.png";
-import dp from "./Images/dp.png";
-import { BsFillGridFill } from "react-icons/bs";
+import moment from "moment";
 import { FaLanguage } from "react-icons/fa";
-import { useState } from "react";
+import { BsFillGridFill } from "react-icons/bs";
+import adhar from "./Images/adhar.svg";
+import satyamev from "./Images/satyamev.svg";
+
 
 function App() {
+
+
+
   const [show, setShow] = useState(false);
-  const [village, setVillage] = useState("");
-  const [villageH, setVillageH] = useState("");
-  const [tehsil, setTehsil] = useState("");
-  const [tehsilH, setTehsilH] = useState("");
-  const [distt, setDistt] = useState("");
-  const [disttH, setDisttH] = useState("");
-  const [state, setState] = useState("");
-  const [stateH, setStateH] = useState("");
-  const [bo, setBo] = useState("");
-  const [boH, setBoH] = useState("");
-  const [postOffice, setPostoffice] = useState("");
-  const [postOfficeH, setPostofficeH] = useState("");
+
+  const [image, setImage] = useState();
+
+  const [fName, setFName] = useState("");
+  const [fNameH, setFNameH] = useState("");
+  
+  const [nameH, setNameH] = useState("");
+  const [name, setName] = useState("");
+
+  const [dateValue, setDateValue] = useState(moment());
+
+  const [hNo, setHNo] = useState("");
+
   const [pin, setPin] = useState("");
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const [bo, setBo] = useState(""); 
+
+  const [gender, setGender] = useState("");
+
+  const [aadharNumber, setAadharNumber] = useState("");
+
+  const [village, setVillage] = useState("");
+  const [villageH, setVillageH] = useState("");
+
+  const [tehsil, setTehsil] = useState("");
+  const [tehsilH, setTehsilH] = useState("");
+
+  const [postOffice, setPostOffice] = useState("");
+  const [postOfficeH, setPostOfficeH] = useState("");
+
+  const [district, setDistrict] = useState("");
+  const [districtH, setDistrictH] = useState("");
+
+  const [state, setState] = useState("");
+  const [stateH, setStateH] = useState("");
+
+
+  const handleImageChange = (e) => {
+    setImage(e.target.files[0]);
   };
+
+
+
+  const handleDateUpdate = (e) => {
+    const dateValue = e.target.value;
+    setDateValue(moment(dateValue));
+  };
+
 
   return (
     <>
-      {show ? (
+
+
+
+
+
+
+
+
+
+
+{show ? (
         <div className="popUp">
           <div className="frame">
             <div className="head">
@@ -42,18 +90,20 @@ function App() {
             </div>
             <div className="content">
               <div className="photo-content">
+
                 <div className="photo">
-                  <img src={dp} alt="Neeraj-pic" width="100%" height="100%" />
+            <img src={!image?admin:URL.createObjectURL(image)} alt="user pic" height="100%" width="100%" />
                 </div>
+
                 <div className="name">
-                  नीरज
+                  {nameH}
                   <br />
-                  <div>Neeraj</div>
-                  <div className="dob">जन्म तिथि/DOB:&nbsp; 28/10/1997</div>
-                  <div className="gender">पुरुष/ MALE</div>
+                  <div>{name}</div>
+                  <div className="dob">जन्म तिथि/ DOB:&nbsp;  {dateValue.format("DD/MM/YYYY")} </div>
+                  <div className="gender"> {gender}</div>
                 </div>
               </div>
-              <div className="adhar-number">9892 4324 8529</div>
+              <div className="adhar-number">{aadharNumber}</div>
             </div>
             <div className="foot">
               <img
@@ -74,8 +124,7 @@ function App() {
             <div className="content-2">
               <div className="data">
                 <div style={{ fontWeight: "bold", fontSize: "14px" }}>पता:</div>
-                S/O: दशरथ, 445, गाँव {villageH}, {tehsilH}, {postOfficeH}, ({boH}
-                ), {disttH},
+                S/O: {fNameH}, {hNo}, गाँव- {villageH}, {tehsilH}, {postOfficeH}, ({bo}), {districtH},
                 <br />
                 {stateH}- {pin}
                 <br />
@@ -88,8 +137,7 @@ function App() {
                 >
                   Address:
                 </div>
-                S/O: Dashrath, 445, vill-{village}, {tehsil}, {postOffice} ({bo}
-                ), {distt},
+                S/O: {fName}, {hNo}, Vill-{village}, {tehsil}, {postOffice} ({bo}), {district},
                 <br />
                 {state}- {pin}
               </div>
@@ -98,7 +146,7 @@ function App() {
                 <img src={QR} alt="" width="100%" height="100%" />
               </div>
             </div>
-            <div className="adhar-number-2">9892 4324 8529</div>
+            <div className="adhar-number-2">{aadharNumber}</div>
             <div className="foot">
               <img
                 src={contact}
@@ -112,17 +160,27 @@ function App() {
           <br />
 
  <div>
+
  <button className="close" onClick={() => setShow(false)}>
-            Change
+            Edit <CiEdit />
           </button>
           <button className="close" onClick={() => window.print(false)}>
-            Print
+            Print <MdPrint />
           </button>
  </div>
         </div>
-      ) : null}
+      ) 
+      : null
+      }
 
-      <div className="heading">
+
+
+{/* inputs start */}
+
+
+
+
+<div className="heading">
         <img src={satyamev} alt="satyamev logo" />
         <> Unique Identification Authority of India</>
         <img src={adhar} alt="adhar logo" />
@@ -137,185 +195,60 @@ function App() {
         </h3>
       </div>
 
-      <center>
-        <div className="dataField">
-          <h2>Fill the form</h2>
 
-          <form onClick={onSubmit}>
-            <div className="input-box">
-              <input
-                type="text"
-                placeholder="Enter your village Name here..."
-                required
-                value={village}
-                onChange={(e) => setVillage(e.target.value)}
-              />
-              <span>
-                Village <sup> (English)</sup>{" "}
-              </span>
-            </div>
 
-            <div className="input-box">
-              <input
-                type="text"
-                placeholder="Enter your village Name here..."
-                required
-                value={villageH}
-                onChange={(e) => setVillageH(e.target.value)}
-              />
-              <span>
-                Village <sup>(हिंदी)</sup>
-              </span>
-            </div>
 
-            <div className="input-box">
-              <input
-                type="text"
-                placeholder="Enter your tehsil Name here..."
-                required
-                value={tehsil}
-                onChange={(e) => setTehsil(e.target.value)}
-              />
-              <span>
-                Tehsil <sup>(English)</sup>
-              </span>
-            </div>
 
-            <div className="input-box">
-              <input
-                type="text"
-                placeholder="Enter your tehsil Name here..."
-                required
-                value={tehsilH}
-                onChange={(e) => setTehsilH(e.target.value)}
-              />
-              <span>
-                Tehsil <sup>(हिंदी)</sup>
-              </span>
-            </div>
 
-            <div className="input-box">
-              <input
-                type="text"
-                placeholder="Enter your district Name here..."
-                required
-                value={distt}
-                onChange={(e) => setDistt(e.target.value)}
-              />
-              <span>
-                District <sup>(English)</sup>
-              </span>
-            </div>
 
-            <div className="input-box">
-              <input
-                type="text"
-                placeholder="Enter your district Name here..."
-                required
-                value={disttH}
-                onChange={(e) => setDisttH(e.target.value)}
-              />
-              <span>
-                District <sup>(हिंदी)</sup>
-              </span>
-            </div>
+<div className='mainBox'>
 
-            <div className="input-box">
-              <input
-                type="text"
-                placeholder="Enter your state Name here..."
-                required
-                value={state}
-                onChange={(e) => setState(e.target.value)}
-              />
-              <span>
-                State <sup>(English)</sup>
-              </span>
-            </div>
 
-            <div className="input-box">
-              <input
-                type="text"
-                placeholder="Enter your state Name here..."
-                required
-                value={stateH}
-                onChange={(e) => setStateH(e.target.value)}
-              />
-              <span>
-                State <sup>(हिंदी)</sup>
-              </span>
-            </div>
+<input type="file" accept="image/*" onChange={handleImageChange} />
 
-            <div className="input-box">
-              <input
-                type="text"
-                placeholder="Enter your BO Number here..."
-                required
-                value={bo}
-                onChange={(e) => setBo(e.target.value)}
-              />
-              <span>
-                BO Number <sup>(English)</sup>
-              </span>
-            </div>
+<input type="text" placeholder="Name..." value={name} onChange={(e) => setName(e.target.value)}  required  />
+<input type="text" placeholder="Name Hindi..." value={nameH} onChange={(e) => setNameH(e.target.value)}  required  />
 
-            <div className="input-box">
-              <input
-                type="text"
-                placeholder="Enter your BO Number here..."
-                required
-                value={boH}
-                onChange={(e) => setBoH(e.target.value)}
-              />
-              <span>
-                BO Number <sup>(हिंदी)</sup>
-              </span>
-            </div>
+<input type="date" onChange={(e) => handleDateUpdate(e)} />
 
-            <div className="input-box">
-              <input
-                type="text"
-                placeholder="Enter your post office name here..."
-                required
-                value={postOffice}
-                onChange={(e) => setPostoffice(e.target.value)}
-              />
-              <span>
-                Post office <sup>(English)</sup>
-              </span>
-            </div>
+<select onChange={(e)=>setGender(e.target.value)}>
+  <option selected disabled value="Select Gender">Select Gender</option>
+  <option value="पुरुष/ Male">पुरुष/ Male</option>
+  <option value="महिला/ Female">महिला/ Female</option>
+</select>
 
-            <div className="input-box">
-              <input
-                type="text"
-                placeholder="Enter your post office name here..."
-                required
-                value={postOfficeH}
-                onChange={(e) => setPostofficeH(e.target.value)}
-              />
-              <span>
-                Post office <sup>(हिंदी)</sup>
-              </span>
-            </div>
+<input type="text" placeholder="Aadhar Number..." value={aadharNumber} onChange={(e) => setAadharNumber(e.target.value)} required />
+<input type="text" placeholder="House Number" value={hNo} onChange={(e) => setHNo(e.target.value)} required />
+<input type="text" placeholder="Pin Code" value={pin} onChange={(e) => setPin(e.target.value)} required />
+<input type="text" placeholder="BO Code" value={bo} onChange={(e) => setBo(e.target.value)} required />
 
-            <div className="input-box">
-              <input
-                type="text"
-                placeholder="Enter your pin here..."
-                required
-                value={pin}
-                onChange={(e) => setPin(e.target.value)}
-              />
-              <span>Pin Code</span>
-            </div>
+<input type="text" placeholder="Father Name" value={fName} onChange={(e) => setFName(e.target.value)} required />
+<input type="text" placeholder="Father Name Hindi" value={fNameH} onChange={(e) => setFNameH(e.target.value)} required />
 
-            <button type="submit" onClick={() => setShow(true)}>
-              {" "}
-              Submit
-            </button>
-          </form>
-        </div>
-      </center>
+<input type="text" placeholder="Village" value={village} onChange={(e) => setVillage(e.target.value)} required />
+<input type="text" placeholder="Village Hindi" value={villageH} onChange={(e) => setVillageH(e.target.value)} required />
+
+<input type="text" placeholder="tehsil" value={tehsil} onChange={(e) => setTehsil(e.target.value)} required />
+<input type="text" placeholder="tehsil Hindi" value={tehsilH} onChange={(e) => setTehsilH(e.target.value)} required />
+
+<input type="text" placeholder="postOffice" value={postOffice} onChange={(e) => setPostOffice(e.target.value)} required />
+<input type="text" placeholder="postOffice Hindi" value={postOfficeH} onChange={(e) => setPostOfficeH(e.target.value)} required />
+
+<input type="text" placeholder="district" value={district} onChange={(e) => setDistrict(e.target.value)} required />
+<input type="text" placeholder="district Hindi" value={districtH} onChange={(e) => setDistrictH(e.target.value)} required />
+
+<input type="text" placeholder="state" value={state} onChange={(e) => setState(e.target.value)} required />
+<input type="text" placeholder="state Hindi" value={stateH} onChange={(e) => setStateH(e.target.value)} required />
+
+
+<button type="submit" onClick={() => setShow(true)}> Submit </button>
+
+
+
+
+</div>
+
+    
     </>
   );
 }
